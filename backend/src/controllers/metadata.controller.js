@@ -43,7 +43,7 @@ const getGameMetaData = async (req, res, next) => {
     const d = new Date();
     d.setDate(d.getDate() - duration);
     const gameData = request.query(`SELECT G.id,G.name,SUM(cost) as totalProfit,Count(*) as totalNumber 
-    From Ticket,GameTicket,Game G where Ticket.type=3 AND Ticket.timeIn>CAST('${d.toJSON()}' as Datetime) AND Ticket.ticketId=GameTicket.ticketId 
+    From Ticket,GameTicket,Game G where Ticket.type=3 AND Ticket.timeIn>CAST('${d.toJSON()}' as Datetime) AND Ticket.ticketId=GameTicket.gameId
     AND GameTicket.gameId=G.id
   Group by G.id,G.name
   Order by totalProfit DESC`);
@@ -61,7 +61,7 @@ const getGameMetaData = async (req, res, next) => {
 const getVipMetaData = async (req, res, next) => {
   const request = new mssql.Request();
   const vipStatisTic = (
-    await request.query(`Select V.name,V.point,V.vipCode ,SUM(Ticket.cost) as totalPayment,COUNT(Ticket.ticketId) as totakTicketBuy from Vip as V
+    await request.query(`Select V.name,V.point,V.vipCode ,SUM(Ticket.cost) as totalPayment,COUNT(Ticket.ticketId) as totalTicketBuy from Vip as V
     left join VipTicket on VipTicket.vipId=V._id
     left join Ticket on VipTicket.ticketId=Ticket.ticketId 
     Group by V.name,V.point,V.vipCode 

@@ -8,7 +8,7 @@ const dbSettings = {
   user: config.sql.user,
   password: config.sql.password,
   server: "localhost",
-  database: "TINKERBELLGARDEN",
+  database: "TESTFINAL",
   options: {
     trustServerCertificate: true, // change to true for local dev / self-signed certs
   },

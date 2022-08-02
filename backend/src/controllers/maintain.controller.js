@@ -16,13 +16,15 @@ const getMaintainance = async (req, res, next) => {
   if (!sort || sort === 1) sort = 1;
   else sort = -1;
 
-  console.log(`SELECT * FROM Maintainance,Game where 
+  console.log(`SELECT * FROM Maintainance
+  Left join Game on Maintainance.gameId=Game.id
+  Left join Images on Images.cloudinaryId=Maintainance.imageId  where 
   ${listId ? `gameId in (${listId.map(el => `'${el}'`).join(",")})` : `1=1`} AND
   ${listStatus ? `status in (${listStatus.map(el => `'${el}'`).join(",")})` : `1=1`} AND
-  ${start ? `date > (CAST ${start} as Datetime)` : `1=1`} AND
-  ${end ? `date < (CAST ${end} as Datetime)` : `1=1`} AND
+  ${start ? `date > CAST ('${start}' as Datetime)` : `1=1`} AND
+  ${end ? `date < CAST ('${end}' as Datetime)` : `1=1`} AND
   ${search ? `title LIKE '%${search}%'` : `1=1`}
-  AND Maintainance.gameId=Game.id
+  
  
 
  `);
@@ -32,8 +34,8 @@ const getMaintainance = async (req, res, next) => {
   Left join Images on Images.cloudinaryId=Maintainance.imageId  where 
   ${listId ? `gameId in (${listId.map(el => `'${el}'`).join(",")})` : `1=1`} AND
   ${listStatus ? `status in (${listStatus.map(el => `'${el}'`).join(",")})` : `1=1`} AND
-  ${start ? `date > (CAST '${start}' as Datetime)` : `1=1`} AND
-  ${end ? `date < (CAST '${end}' as Datetime)` : `1=1`} AND
+  ${start ? `date > CAST ('${start}' as Datetime)` : `1=1`} AND
+  ${end ? `date < CAST ('${end}' as Datetime)` : `1=1`} AND
   ${search ? `title LIKE '%${search}%'` : `1=1`}
   
  
