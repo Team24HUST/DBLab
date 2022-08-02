@@ -10,7 +10,7 @@ import { selectTypeReport } from "src/redux/slices/reportSlice";
 const ListReport = ({ games }) => {
     const dp = useDispatch();
     const { reportConfig } = useSelector((state) => state.reportSlice);
-    const gameReports = useSelector((state) => selectTypeReport(state, games[0].type));
+    const gameReports = useSelector((state) => selectTypeReport(state, games.length > 0 ? games[0].type : null));
 
     const fetchData = async () => {
         let start = reportConfig.start,
